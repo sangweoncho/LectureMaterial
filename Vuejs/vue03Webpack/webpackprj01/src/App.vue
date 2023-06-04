@@ -1,30 +1,64 @@
-<template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
-</template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<style scoped>
+header {
   text-align: center;
-  color: #2c3e50;
+  height: 60px;
 }
 
-nav {
-  padding: 30px;
+section {
+  text-align: center;
+  height: 150px;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+footer {
+  text-align: center;
+  height: 60px;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+/* step2. 배경색 지정*/
+header {
+  background-color: #efb14e;
+}
+
+section {
+  background-color: #95db5e;
+}
+
+footer {
+  background-color: #78d0d1;
+}
+
+/* step3. 여백 주기 - margin , padding */
+header {
+  margin: 0 0 20px 0;
+}
+
+section {
+  margin: 40px 20px;
+}
+
+div {
+  margin: 40px 20px;
 }
 </style>
+
+<template>
+  <div>
+    <header-comp></header-comp>
+    <section id="page1" data-role="page">
+      <div class="content" data-role="content">컨텐츠</div>
+    </section>
+    <footer-comp></footer-comp>
+  </div>
+</template>
+
+<script>
+import HeaderComp from './HeaderComp.vue';
+import FooterComp from './FooterComp.vue';
+
+export default {
+  components: {
+    'header-comp': HeaderComp,
+    'footer-comp': FooterComp,
+  },
+};
+</script>
