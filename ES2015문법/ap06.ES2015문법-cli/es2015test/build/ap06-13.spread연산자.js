@@ -1,6 +1,12 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 var _console, _console2;
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -31,7 +37,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 var cities = ['서울', '부산', '제주'];
 console.log(cities[0], cities[1], cities[2]);
 (_console = console).log.apply(_console, cities);
-debugger;
+// debugger;
 
 // spread : cities 를 이용해서 새로운 배열을 만든다(복제)
 var newcities = [].concat(cities);
@@ -43,4 +49,66 @@ console.log(east);
 console.log(countries);
 var countries2 = [].concat(east, west);
 console.log(countries2);
-debugger;
+// debugger;
+
+// rest
+var lakes = ['경포호', '화진포', '송지호', '청초호'];
+var first = lakes[0],
+  rest = lakes.slice(1);
+console.log(first); // 경포호
+console.log(rest); // 화진포,송지호,청초호
+
+function restFunc(first) {
+  console.log(first);
+  for (var _len = arguments.length, rest = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    rest[_key - 1] = arguments[_key];
+  }
+  console.log(rest);
+}
+restFunc(1, 2, 3, 4, 5);
+
+// 객체에서 spread
+var car1 = {
+  type: 't1',
+  color: 's1',
+  model: 2017
+};
+var car2 = {
+  type: 't2',
+  color: 's2',
+  model: 2019
+};
+var type = car1.type; // t1
+// console.log(type);
+
+// 함수 이용
+var func = function func(_ref) {
+  var type = _ref.type;
+  console.log(type);
+};
+func(_objectSpread(_objectSpread({}, car1), car2)); // t1이 찍히고, 뒤에 t2가 찍힌다.
+// { type } = {...car1, ...car2 };
+
+// execise : spread
+var morning = {
+  breacfast: '미역국',
+  lunch: '삼치구이'
+};
+var dinner = '스테이크';
+var meals = _objectSpread(_objectSpread({}, morning), {}, {
+  dinner: dinner
+});
+console.log(meals); // {breacfast: '미역국', lunch: '삼치구이', dinner: '스테이크'}
+
+// 함수형태
+function childComponent() {
+  for (var _len2 = arguments.length, props = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    props[_key2] = arguments[_key2];
+  }
+  // props === rest 연산자
+  console.log(props);
+}
+var message = 'passed from Parent Componet';
+childComponent.apply(void 0, _toConsumableArray(message));
+// message === spread 연산자
+// ... = ... ===> rest = spread
