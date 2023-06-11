@@ -17,5 +17,23 @@
     이터러블(iterable) 객체를 "개별" 요소로 분리
     이터러블(iterable) 객체에는 Array, String, Map, Set 등이 있다.
     iterator를 생성해서 next()로 순회할 수 있는 자료구조가 이터러블
-
 */
+
+const cities = ['서울', '부산', '제주'];
+console.log(cities[0], cities[1], cities[2]);
+console.log(...cities);
+debugger;
+
+// spread : cities 를 이용해서 새로운 배열을 만든다(복제)
+const newcities = [...cities];
+console.log(...newcities);
+
+const east = ['A', 'B', 'C'];
+const west = ['D', 'E', 'F'];
+const countries = east.concat(west);
+console.log(east);
+console.log(countries);
+
+const countries2 = [...east, ...west];
+console.log(countries2);
+debugger;
