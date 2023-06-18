@@ -164,13 +164,13 @@
       },
       change3(e) {
         console.log(e.target);
-        this.$data.arr = this.$data.arr.filter((value, index, arr) => {
-          if (index > 100) {
+        this.$data.arr = this.$data.arr.filter((value, index, array) => {
+          if (value < 100) {
             return true;
           }
           return false;
         });
-        console.log(this.$data.arr);
+        console.log(this.$data.arr); // [3, 4, 5]
       },
       change4(e) {
         console.log(e.target);
