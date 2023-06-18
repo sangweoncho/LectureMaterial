@@ -111,16 +111,29 @@
       /* 이벤트 핸들러 등록 + 일반 함수 */
       btnAddClick(e) {
         console.log(e.target);
-        this.$data.contacts.push(
-          {
-            // name: '1',
-            // tel: '2',
-            // address: '3',
-            name: this.$data.name,
-            tel: this.$data.tel,
-            address: this.$data.address,
-          }
-        );
+        // 데이터를 변경하면 화면이 변경된다.
+        // 데이터를 추가한다. 배열 push or spread
+        // this.$data.contacts.push(
+        //   {
+        //     // name: '1',
+        //     // tel: '2',
+        //     // address: '3',
+        //     name: this.$data.name,
+        //     tel: this.$data.tel,
+        //     address: this.$data.address,
+        //   }
+        // );
+
+        // const obj = { name: '설현', tel: '010-3456-8200', address: '서현' };
+        // v-model 에 의해서 값이 name,tel,address 변수에 이미 대입이 되어 있다.
+        // v-model 은 화면에 값을 입력받을때만 사용한다.
+        const obj = {
+          name: this.$data.name,
+          tel: this.$data.tel,
+          address: this.$data.address
+        };
+        this.$data.contacts.push(obj);
+
         this.$data.name = '';
         this.$data.tel = '';
         this.$data.address = '';
