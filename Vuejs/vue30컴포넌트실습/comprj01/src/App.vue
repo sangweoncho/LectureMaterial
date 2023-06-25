@@ -2,6 +2,14 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
+    <router-link to="/vue3103">vue3103</router-link>
+    <router-link to="/vue3104">vue3104</router-link>
+    <router-link to="/vue3403">vue3403</router-link>
+    <router-link to="/Vue34ex">Vue34ex</router-link>
+    <router-link to="/Vue3501">Vue3501</router-link>
+    <router-link to="/Vue3701">Vue3701</router-link>
+    <router-link to="/Vue4301">Vue4301</router-link>
+    <router-link to="/todo">Todo</router-link>
   </nav>
   <router-view />
 </template>
