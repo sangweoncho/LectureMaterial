@@ -1,5 +1,6 @@
 "use strict";
 
+function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
 /*
 
     ES2015의 const 와 let 에 대해서 알아본다.
@@ -27,20 +28,16 @@
     변수 중복 선언 불가
     변수 이름 충돌 불가
 */
-// console.log(aa);
 
 var msg = 'global scope';
 if (true) {
   var _msg = 'block scope';
 }
-function outer() {
-  var msg = 'block scope';
+function outer(params) {
+  var msg = 'function scope at outer ';
   if (true) {
-    var _msg2 = 'block scope';
+    var _msg2 = 'block scope at outer ';
   }
 }
-var aa = 'hosting';
-console.log(aa);
-
-// 변수선언은 var 대신 const 를 쓴다.
-// 오류가 나면 let 를 쓴다.
+var pizza = true;
+false, _readOnlyError("pizza"); // 에러 발생.

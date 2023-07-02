@@ -212,18 +212,6 @@
 
     동영상 시연
 
-
-    기능 설명
-        1. input 태그에 빈 문자열이 입력 되는 경우는 배열에 추가되지 않게.
-        2. add 후에 input 태그에 남아있는 입력값 지우기
-        3. add 할 때 this.$data.todoItems 가 빈 배열인 경우는
-           오류가 발생 할 수 있으므로 방어 코드 추가
-        4. 이벤트 핸들러 작성 후 버블링을 확인한다.
-            삭제 버튼을 클릭하면 click 이벤트가 bubbling 되는 것을 확인한다.
-            doneToggle 메서드 안에 debugger; 설정
-            removeTodo 메서드 안에 debugger; 설정
-
-
     methods 작업 순서
         clearAll() { }
         checked(done) { }
@@ -231,7 +219,21 @@
         removeTodo(id) { }  ==> ap03-11.객체배열.html 참조
         addTodo() { }       ==> ap03-11.객체배열.html 또는 vue23-03.지시자.html 참조
 
+    버블링 확인
+        이벤트 핸들러 작성 후 버블링을 확인한다.
+            삭제 버튼을 클릭하면 click 이벤트가 bubbling 되는 것을 확인한다.
+            doneToggle 메서드 안에 debugger; 설정
+            removeTodo 메서드 안에 debugger; 설정
+            변경 전: v-on:click="removeTodo(todoItem.id)"
+            변경 후: v-on:click.stop="removeTodo(todoItem.id)"
 
+    clearAll() 작성하기
+
+    checked(done) 작성하기
+        1. checked 메서드에서 class에 빈 문자열로 설정하면 안되고 null 로 설정하면 됨.
+        2. "checked(todoItem.done)" 는 "todoItem.done ? 'checked': null " 와 같다.
+
+    doneToggle(id) 작성하기
       doneToggle(id) {
           // 실습시간: 10:분
           // 토글 기능 완성하기
@@ -242,6 +244,7 @@
           // 2. 배열 할당
       }
 
+    removeTodo(id) 작성하기
       removeTodo(id) {
         // 실습시간: 10:분
         // 배열에서 요소를 삭제 하시오
@@ -250,23 +253,19 @@
         // 2. 배열 할당
       }
 
-      addTodo 에서 todoItems에서 최대 id 값을 구하는 방법.
-        방법1. todoItems.map()과 todoItems.reduce()를 사용하여 max id를 찾는 방법
-        "ap03-11.객체배열.html" 를 참조하여 작성하시오.
-            1. input 태그에 빈 문자열이 입력 되는 경우는 배열에 추가되지 않게.
+    addTodo() 작성하기
+        addTodo 에서 todoItems에서 최대 id 값을 구하는 방법.
+            ==> todoItems.map()과 todoItems.reduce()를 사용하여 max id를 찾는 방법
+                "ap03-11.객체배열.html" 를 참조하여 작성하시오.
+            1. input 태그에 빈 문자열이 입력 되는 경우는 배열에 추가되지 않게하고
+               모달 창이 출력되게 하시오.
             2. id 값 만 있는 새로운 배열을 만든다. ==> map() 메서드 사용.
             3. map() 메서드로 만들어진 새로운 배열에서 최대값을 찾는다.
             4. 추가될 새로운 new id = max id + 1
             5. add 후에 input 태그에 남아있는 입력값 지우기
+            6. add 할 때 this.$data.todoItems 가 빈 배열인 경우는
+               오류가 발생 할 수 있으므로 방어 코드 추가
 
-
-    주의 사항.
-        1. checked 메서드에서 class에 빈 문자열로 설정하면 안됨.
-            null 로 설정하면 됨.
-        2. "checked(todoItem.done)" 는 "todoItem.done ? 'checked': null " 와 같다.
-        3. click 이벤트가 bubbling 안되게 이벤트 취소 기능을 추가해야 한다.
-            변경 전: v-on:click="removeTodo(todoItem.id)"
-            변경 후: v-on:click.stop="removeTodo(todoItem.id)"
     </pre>
     <hr>
 
@@ -296,12 +295,12 @@
           <div class="modal-wrapper">
             <div class="modal-container">
               <div class="modal-header">
-                <h3 slot="header">경고</h3>
+                <h3>경고</h3>
               </div>
 
               <div class="modal-footer">
                 <span v-on:click="showModal = false">
-                  창을 닫고, 할 일을 입력하세요.
+                  할 일을 입력하세요.
                   <i class="closeModalBtn fas fa-times"
                     aria-hidden="true"></i>
                 </span>
@@ -346,13 +345,8 @@
 
 </html>
 
-
 <!-- vue 플러그인 임포트   -->
 <script src="https://unpkg.com/vue@2.7.8/dist/vue.js">/* vue 플러그인 임포트 */</script>
-<script src="https://unpkg.com/vuex@3.6.2/dist/vuex.js"> /* vuex 플러그인 임포트 */</script>
-<script src="https://unpkg.com/vue-router@3.5.4/dist/vue-router.js"> /* vue 라우터 플러그인 임포트 */</script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"> /* axios 플러그인 임포트 */</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> /* jQuery 플러그인 임포트 */</script>
 <script>
   new Vue({
     /* edtmc^2w */
@@ -377,83 +371,82 @@
         this.$data.todoItems = [];
       },
       checked(done) {
-        // if (done) {
-        //   return 'checked';
-        // }
-        // return null;
-        return done ? 'checked' : null;
+        // todoItem.done ? 'checked':null
+        if (done)
+          return 'checked';
+
+        return null;
       },
       doneToggle(id) {
-        console.log(id);
         debugger;
-        // this.$data.todoItems.done = 'checked';
-        // length가 동일하다 .. map 사용
-        // 1. 새로운 배열 만든다. : 복제 후 할당
+        // 복제 후 할당 처리 방식.
+        // 1. 새로운 배열 만들기. map 사용
+        // 2. this.$data.todoItems 에 새로운 배열 할당하기
         const newarr = this.$data.todoItems.map((value, index, array) => {
-          console.log(value, index, array);
-          // debugger;
-          if (value.id === id) {
+          if (value.id === id)
             value.done = !value.done;
-            return value;
-          };
-          this.$data.todoItems = array;
+          return value;
         });
-        // 2. 새로운 배열 할당하기 this.$data.todoItems
+        this.$data.todoItems = newar;
       },
       removeTodo(id) {
         debugger;
-
         // 이벤트 취소
         // window.event.stopPropagation();
         // window.event.preventDefault();
 
-        const newarr2 = this.$data.todoItems.filter((value, index, array) => {
-          console.log(value, index, array);
-          return value.id === id ? false : true;
+        // 복제 후 할당 처리 방식.
+        // 1. 새로운 배열 만들기. filter 사용
+        // 2. this.$data.todoItems 에 새로운 배열 할당하기
+        const newarr = this.$data.todoItems.filter((value, index, array) => {
+          if (value.id === id)
+            return false;
+          return true;
         });
-        this.$data.todoItems = newarr2;
+        this.$data.todoItems = newarr;
       },
       addTodo(e) {
         console.log(e.target);
-        // 빈 문자열일 경우 modal
-        debugger;
+
+        // input 태그에 빈 문자열이 입력 되는 경우는 배열에 추가되지 않게 하고
+        // 모달 창이 출력되게 하시오.
+        // !this.$data.newTodoItem === this.$data.newTodoItem === null ||
+        //                             this.$data.newTodoItem === undefined ||
+        //                             this.$data.newTodoItem === '' ||
         if (!this.$data.newTodoItem || this.$data.newTodoItem.trim().length <= 0) {
-          this.$data.showModal = !this.$data.showModal;
+          this.$data.showModal = !this.$data.showModal
           return;
-          // e.stopPropagation();
-          // e.preventDefault();
         }
+
+        // todoItems.map()과 todoItems.reduce()를 사용하여 max id를 찾는 방법
         const ids = this.$data.todoItems.map((value, index, array) => {
-          // value === id, done, todo
+          // value === { id, done, todo}
           return value.id;
         });
-        console.log(ids);
-        // ids 의 최대값 ==> max(), reduce()
+
+        console.log(ids);// [1,2,3,4]
+        // ids 배열에서 최대값 찾기 ==> max(), reduce()
         const maxid = ids.reduce((pvalue, cvalue, index, array) => {
           debugger;
-          if (pvalue > cvalue) {
+          if (pvalue > cvalue)
             return pvalue;
-          } else {
-            return cvalue
-          }
+          else
+            return cvalue;
         }, 0);
-        // pvalue 는 default 0 이다.
 
-        // 추가할 객체 생성
+        // 추가될 객체
         const newobj = {
           id: maxid + 1,
           todo: this.$data.newTodoItem,
           done: false,
         };
 
-        // 배열에 추가
-        // push 는 브라우저에 영향 받을 수 있다.
+        // 배열에 추가 ==> push() 메서드 또는 spread 연산자
         // this.$data.todoItems.push(newobj);
-        // spread 는 모든 브라우저에서 사용 가능하다.
         this.$data.todoItems = [...this.$data.todoItems, newobj];
-        // 입력박스 초기화
-        this.$data.newTodoItem = null;
 
+        // 입력값 newTodoItem 초기화
+        this.$data.newTodoItem = null;
       }
     },
   });

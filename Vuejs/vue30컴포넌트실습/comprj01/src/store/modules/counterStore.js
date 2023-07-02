@@ -17,9 +17,13 @@ const store = {
       const { commit } = mutations;
       commit('get', payload);
     },
-    setCounter(mutations /* 고정 */, payload) {
+    // set(mutations /* 고정 */, payload) {
+    //   //const { commit } = mutations;
+    //   mutations.commit('set', payload);
+    // },
+    setCounter({ commit } /* 고정 */, payload) {
       debugger;
-      mutations.commit('setCounter', payload);
+      commit('setCounter', payload);
     },
   },
   mutations: {
@@ -45,7 +49,7 @@ const store = {
   state: {
     /* vue인스턴스나 컴포넌트의 data 프로퍼티에 해당 */
     인자: 'STORE STATE',
-    welcome: 'Hello world Store!!',
+    welcome: 'Hello world vuex',
     counter: 10,
   },
   getters: {

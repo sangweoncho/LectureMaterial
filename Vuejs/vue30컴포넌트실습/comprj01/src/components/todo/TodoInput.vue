@@ -33,6 +33,78 @@ input:focus {
   border-style: none;
   font-size: 0.9rem;
 }
+
+.addContainer {
+  float: right;
+  background: linear-gradient(to right, #6478fb, #8763fb);
+  display: inline-block;
+  width: 3rem;
+  border-radius: 0 5px 5px 0;
+}
+
+.addBtn {
+  color: white;
+  vertical-align: middle;
+}
+
+.closeModalBtn {
+  color: #62acde;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 300px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #62acde;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
 </style>
 
 <template>
@@ -40,7 +112,7 @@ input:focus {
     <input
       type="text"
       placeholder="Type what you have to do"
-      v-model="newToItem"
+      v-model="newTodoItem"
       ref="refNewTodoItem"
     />
     <span class="addContainer" v-on:click="addTodo">
@@ -56,12 +128,12 @@ input:focus {
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
-            <!-- <h3 class="header">경고</h3> -->
+            <h3>경고</h3>
           </div>
 
           <div class="modal-footer">
             <span v-on:click="showModal = false">
-              창을 닫고, 할 일을 입력하세요.
+              할 일을 입력하세요.
               <i class="closeModalBtn fas fa-times" aria-hidden="true"></i>
             </span>
           </div>
@@ -81,34 +153,37 @@ export default {
   data() {
     /* 컴포넌트 안에서 사용되는 변수 등록. 개별 변수 */
     return {
-      newToItem: null,
+      newTodoItem: null,
       showModal: false,
     };
   },
   //template: ``,
   methods: {
+    /* 이벤트 핸들러 등록 + 일반 함수 */
     addTodo(e) {
       console.log(e.target);
       debugger;
-      // 부모 컴포넌트에게 addTodo 이벤트 발생시킨다.
-      this.$emit('addTodo', e, this.$data.newToItem); // 메소드명과 같이addTodo
 
-      // 입력태그에 포커스 : ref 태그
+      // input 태그에 빈 문자열이 입력 되는 경우는 배열에 추가되지 않게 하고
+      // 입력 태그에 focus 를 주시오
+      // 모달 창이 출력되게 하시오.
+      // !this.$data.newTodoItem === this.$data.newTodoItem === null ||
+      //                             this.$data.newTodoItem === undefined ||
+      //                             this.$data.newTodoItem === '' ||
       if (
         !this.$data.newTodoItem ||
         this.$data.newTodoItem.trim().length <= 0
       ) {
-        // 모달창 이용, 포커스 이용 : 2가지
         this.$data.showModal = !this.$data.showModal;
         this.$refs.refNewTodoItem.focus();
         return;
-        // e.stopPropagation();
-        // e.preventDefault();
       }
-      // 입력박스 초기화
+
+      this.$emit('addTodo', e, this.$data.newTodoItem);
+
+      // 입력값 newTodoItem 초기화
       this.$data.newTodoItem = null;
     },
-    /* 이벤트 핸들러 등록 + 일반 함수 */
     /* vuex 를 사용하는 경우
       mapActions 는 store의 actions 를 가져오는 헬퍼 메서드입니다.
       namespaced: true를 설정한 경우 네임스페이스를 사용하기 때문에 store의 모듈 명을 적어주어야 합니다.

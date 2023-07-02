@@ -1,6 +1,8 @@
 function name(params) {
   console.log('name function');
 }
+name();
+
 const name2 = function (params) {
   console.log('name2 function');
 };
@@ -10,6 +12,7 @@ const obj = {
 };
 
 obj.name2();
+
 
 const b = new Number(10);
 console.log(b);

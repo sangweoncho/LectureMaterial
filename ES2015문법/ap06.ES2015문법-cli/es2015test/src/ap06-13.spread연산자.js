@@ -17,40 +17,37 @@
     이터러블(iterable) 객체를 "개별" 요소로 분리
     이터러블(iterable) 객체에는 Array, String, Map, Set 등이 있다.
     iterator를 생성해서 next()로 순회할 수 있는 자료구조가 이터러블
+
 */
 
 const cities = ['서울', '부산', '제주'];
-console.log(cities[0], cities[1], cities[2]);
-console.log(...cities);
-// debugger;
+console.log(cities[0], cities[1], cities[2]); // '서울', '부산', '제주'
+console.log(...cities); // '서울', '부산', '제주'
 
-// spread : cities 를 이용해서 새로운 배열을 만든다(복제)
-const newcities = [...cities];
-console.log(...newcities);
+const east = ['U', 'K', 'T'];
+const west = ['N', 'C', 'G'];
 
-const east = ['A', 'B', 'C'];
-const west = ['D', 'E', 'F'];
-const countries = east.concat(west);
-console.log(east);
-console.log(countries);
+// east 와 west 를 결합하여  countries 배열을 만드시오
+const countries = east.concat(west); // "U", "K", "T", "N", "C", "G"
+console.log(countries); // ['U', 'K', 'T', 'N', 'C', 'G']
 
-const countries2 = [...east, ...west];
-console.log(countries2);
-// debugger;
+// east 와 west 를 결합하여  countries1 배열을 만드시오.
+// spread 연산자 사용하여
+// spread 연산자 는 새로운 배열이나 객체를 만들 때 주로 사용된다
+const countries1 = [...east, ...west]; // ['U', 'K', 'T', 'N', 'C', 'G']
+console.log(countries1); // ['U', 'K', 'T', 'N', 'C', 'G']
+console.log(east); // ['U', 'K', 'T']
+console.log(west); // ['N', 'C', 'G']
 
-// rest
-const lakes = ['경포호', '화진포', '송지호', '청초호'];
-const [first, ...rest] = lakes;
-console.log(first); // 경포호
-console.log(rest); // 화진포,송지호,청초호
+let lakes = ['경포호', '화진포', '송지호', '청초호'];
+let [first, ...rest] = lakes; // ...rest : rest 연산자
+console.log(first); // "경포호"
+console.log(rest); // ["화진포", "송지호", "청초호"]
 
-function restFunc(first, ...rest) {
-  console.log(first);
-  console.log(rest);
-}
-restFunc(1, 2, 3, 4, 5);
+let [city1, ...cityrest] = [...east, ...west];
+// ...cityrest: rest 연산자  , [...east, ...west] : spread 연산자
+console.log(cityrest); // ["K", "T", "N", "C", "G"]
 
-// 객체에서 spread
 const car1 = {
   type: 't1',
   color: 's1',
@@ -61,31 +58,28 @@ const car2 = {
   color: 's2',
   model: 2019,
 };
+
 const { type } = car1; // t1
-// console.log(type);
-
-// 함수 이용
+console.log(type); // t1
+// { type } = { ...car1, ...car2 }
 const func = function ({ type }) {
-  console.log(type);
+  console.log(type); // t2
 };
-func({ ...car1, ...car2 }); // t1이 찍히고, 뒤에 t2가 찍힌다.
-// { type } = {...car1, ...car2 };
+func({ ...car1, ...car2 });
 
-// execise : spread
-const morning = {
+const moring = {
   breacfast: '미역국',
-  lunch: '삼치구이',
+  lunuch: '삼치구이',
 };
 const dinner = '스테이크';
-const meals = { ...morning, dinner };
-console.log(meals); // {breacfast: '미역국', lunch: '삼치구이', dinner: '스테이크'}
+const meals = { ...moring, dinner /*  dinner: dinner */ };
+console.log(meals); // meals 에 출력되는 값은 무엇인가?
 
-// 함수형태
+// props 에 출력되는 값은 무엇인가?
 function childComponent(...props) {
-  // props === rest 연산자
-  console.log(props);
+  // callee
+  console.log(props); // props 에 출력되는 값은 무엇인가?
+  debugger;
 }
-const message = 'passed from Parent Componet';
-childComponent(...message);
-// message === spread 연산자
-// ... = ... ===> rest = spread
+const message = 'passed from Parent Component';
+childComponent(...message); // caller

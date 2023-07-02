@@ -18,9 +18,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 */
 
 // Module2.js
-// Module1.js 에서 default 는 { } 가 없다.
 
-console.log(_Module["default"]);
+console.log(_Module["default"]); // 2
 debugger;
-console.log(_Module.a, _Module.c);
-debugger;
+console.log(_Module.a, _Module.c); // 1, 3

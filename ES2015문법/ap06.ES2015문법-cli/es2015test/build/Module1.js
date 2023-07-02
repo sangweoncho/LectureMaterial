@@ -12,11 +12,17 @@ exports["default"] = exports.c = exports.a = void 0;
   exprot default ������ �Լ��� ������ �� ����Ѵ�.
   export default �� ���Ͽ��� �� ���� ��� �����ϴ�.
 */
+
 var a = 1;
 exports.a = a;
 var b = 2;
 var c = 3;
+
+// export ������ �Լ��� ������ �� ����Ѵ�.
+// export ���Ͽ��� ���� �� ��� �����ϴ�
 exports.c = c;
-// import {a,c} 로 불러온다.
-var _default = b;
+// import {a, c}
+// exprot default ������ �Լ��� ������ �� ����Ѵ�.
+// export default �� ���Ͽ��� �� ���� ��� �����ϴ�.
+var _default = b; // import b
 exports["default"] = _default;

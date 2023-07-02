@@ -91,7 +91,9 @@ export default {
       this.$emit('doneToggle', e, id);
     },
     removeTodo(id) {
-      // 이벤트 취소 기능이 있어야 한다.
+      // 이벤트 취소
+      // window.event.stopPropagation();
+      // window.event.preventDefault();
 
       console.log(id);
       debugger;

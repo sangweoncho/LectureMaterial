@@ -7,9 +7,8 @@ export default createStore({
   // getters: {},
   // mutations: {},
   // actions: {},
-  // modules: {},
   modules: {
-    // "모듈명: store명", 형태로 저장됩니다. 모듈명 === store명
+    // "모듈명: store명", 형태로 저장됩니다.
     counterStore: counterStore,
   },
 });

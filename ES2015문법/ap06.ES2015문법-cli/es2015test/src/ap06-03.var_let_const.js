@@ -25,20 +25,20 @@
     변수 중복 선언 불가
     변수 이름 충돌 불가
 */
-// console.log(aa);
 
 let msg = 'global scope';
+
 if (true) {
   let msg = 'block scope';
 }
-function outer() {
-  let msg = 'block scope';
+
+function outer(params) {
+  let msg = 'function scope at outer ';
+
   if (true) {
-    let msg = 'block scope';
+    let msg = 'block scope at outer ';
   }
 }
-let aa = 'hosting';
-console.log(aa);
 
-// 변수선언은 var 대신 const 를 쓴다.
-// 오류가 나면 let 를 쓴다.
+const pizza = true;
+pizza = false; // 에러 발생.

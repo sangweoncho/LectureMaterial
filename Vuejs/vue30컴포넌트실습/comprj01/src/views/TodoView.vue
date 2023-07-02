@@ -1,242 +1,26 @@
-<style scoped>
-/* input {
-  border-style: groove;
-  width: 200px;
-}
-
-button {
-  border-style: groove;
-}
-
-.shadow {
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
-}
-
-h1 {
-  color: #2f3b52;
-  font-weight: 900;
-  margin: 2.5rem 0 1.5rem;
-}
-
-input:focus {
-  outline: none;
-}
-
-.inputBox {
-  background: white;
-  height: 50px;
-  line-height: 50px;
-  border-radius: 5px;
-}
-
-.inputBox input {
-  border-style: none;
-  font-size: 0.9rem;
-} */
-
-/* .addContainer {
-  float: right;
-  background: linear-gradient(to right, #6478fb, #8763fb);
-  display: inline-block;
-  width: 3rem;
-  border-radius: 0 5px 5px 0;
-}
-
-.addBtn {
-  color: white;
-  vertical-align: middle;
-}
-
-.closeModalBtn {
-  color: #62acde;
-}
-
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: table;
-  transition: opacity 0.3s ease;
-}
-
-.modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.modal-container {
-  width: 300px;
-  margin: 0px auto;
-  padding: 20px 30px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-  transition: all 0.3s ease;
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-.modal-header h3 {
-  margin-top: 0;
-  color: #62acde;
-}
-
-.modal-body {
-  margin: 20px 0;
-}
-
-.modal-default-button {
-  float: right;
-}
-
-.modal-enter {
-  opacity: 0;
-}
-
-.modal-leave-active {
-  opacity: 0;
-}
-
-.modal-enter .modal-container,
-.modal-leave-active .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-
-ul {
-  list-style-type: none;
-  padding-left: 0px;
-  margin-top: 0;
-  text-align: left;
-}
-
-li {
-  display: flex;
-  min-height: 50px;
-  height: 50px;
-  line-height: 50px;
-  margin: 0.5rem 0;
-  padding: 0 0.9rem;
-  background: white;
-  border-radius: 5px;
-}
-
-li.checked {
-  background: #bbb;
-  color: #fff;
-  text-decoration: line-through;
-}
-
-.checkBtn {
-  line-height: 45px;
-  color: #62acde;
-  margin-right: 5px;
-}
-
-.removeBtn {
-  margin-left: auto;
-  color: #de4343;
-}
-
-.list-enter-active,
-.list-leave-active {
-  transition: all 1s;
-}
-
-.list-enter,
-.list-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
-} */
-
-/* .clearAllContainer {
-  width: 8.5rem;
-  height: 50px;
-  line-height: 50px;
-  background-color: white;
-  border-radius: 5px;
-  margin: 0 auto;
-}
-
-.clearAllBtn {
-  color: #e20303;
-  display: block;
-} */
-</style>
+<style scoped></style>
 
 <template>
   <div id="app">
     <!-- TodoHeader -->
-    <!-- <header>
-      <h1>TODO it!</h1>
-    </header> -->
-
     <TodoHeader></TodoHeader>
 
     <!-- TodoInput -->
-    <!-- <div class="inputBox shadow">
-      <input type="text" placeholder="Type what you have to do" />
-      <span class="addContainer">
-        <i aria-hidden="true" class="addBtn fas fa-plus"></i>
-      </span>
-    </div> -->
     <TodoInput v-on:addTodo="addTodo"></TodoInput>
 
     <!-- TodoList -->
-    <!-- "checked(todoItem.done)"  <==> "todoItem.done ? 'checked': null "  -->
     <TodoList
       v-bind:todoItems="todoItems"
       v-on:doneToggle="doneToggle"
       v-on:removeTodo="removeTodo"
-      removeTodo
-    >
-    </TodoList>
-    <!-- <section>
-      <ul>
-        <li>
-          <i aria-hidden="true" class="checkBtn fas fa-check"></i>
-          영화보기
-          <span type="button" class="removeBtn">
-            <i aria-hidden="true" class="far fa-trash-alt"></i>
-          </span>
-        </li>
-        <li class="checked">
-          <i aria-hidden="true" class="checkBtn fas fa-check"></i>
-          주말 산책
-          <span type="button" class="removeBtn">
-            <i aria-hidden="true" class="far fa-trash-alt"></i>
-          </span>
-        </li>
-        <li>
-          <i aria-hidden="true" class="checkBtn fas fa-check"></i>
-          ES6 학습
-          <span type="button" class="removeBtn">
-            <i aria-hidden="true" class="far fa-trash-alt"></i>
-          </span>
-        </li>
-        <li>
-          <i aria-hidden="true" class="checkBtn fas fa-check"></i>
-          잠실 야구장
-          <span type="button" class="removeBtn">
-            <i aria-hidden="true" class="far fa-trash-alt"></i>
-          </span>
-        </li>
-      </ul>
-    </section> -->
+    ></TodoList>
 
     <!-- TodoFooter -->
-    <!-- <div class="clearAllContainer">
-      <span class="clearAllBtn">Clear All</span>
-    </div> -->
     <TodoFooter v-on:clearAll="clearAll"></TodoFooter>
   </div>
 </template>
 
 <script>
-// import TodoHeader from '../../../../vue45ToDo/1차/TodoHeader.vue';
 // vuex 라이브러리에서 mapActions, mapMutations, mapState, mapGetters 함를 가져옵니다.
 // import { mapActions, mapMutations, mapState, mapGetters } from 'vuex';
 import TodoHeader from '../components/todo/TodoHeader.vue';
@@ -260,61 +44,66 @@ export default {
   },
   //template: ``,
   methods: {
+    /* 이벤트 핸들러 등록 + 일반 함수 */
     clearAll(e) {
       debugger;
       console.log(e.target);
       this.$data.todoItems = [];
     },
-    addTodo(e, newTodoItem) {
-      console.log(e, newTodoItem);
+    doneToggle(e, id) {
+      debugger;
+      console.log(id);
+      // 복제 후 할당 처리 방식.
+      // 1. 새로운 배열 만들기. map 사용
+      // 2. this.$data.todoItems 에 새로운 배열 할당하기
+      const newarr = this.$data.todoItems.map((value, index, array) => {
+        if (value.id === id) value.done = !value.done;
+        return value;
+      });
+      this.$data.todoItems = newarr;
+    },
+    removeTodo(id) {
+      debugger;
+      console.log(id);
 
+      // 복제 후 할당 처리 방식.
+      // 1. 새로운 배열 만들기. filter 사용
+      // 2. this.$data.todoItems 에 새로운 배열 할당하기
+      const newarr = this.$data.todoItems.filter((value) => {
+        if (value.id === id) return false;
+        return true;
+      });
+      this.$data.todoItems = newarr;
+    },
+    addTodo(e, newTodoItem) {
+      debugger;
+      console.log(e.target);
+
+      // todoItems.map()과 todoItems.reduce()를 사용하여 max id를 찾는 방법
       const ids = this.$data.todoItems.map((value) => {
+        // value === { id, done, todo}
         return value.id;
       });
-      console.log(ids);
-      // ids 의 최대값 ==> max(), reduce()
+
+      console.log(ids); // [1,2,3,4]
+      // ids 배열에서 최대값 찾기 ==> max(), reduce()
       const maxid = ids.reduce((pvalue, cvalue) => {
         debugger;
-        if (pvalue > cvalue) {
-          return pvalue;
-        } else {
-          return cvalue;
-        }
+        if (pvalue > cvalue) return pvalue;
+        else return cvalue;
       }, 0);
-      // pvalue 는 default 0 이다.
 
-      // 추가할 객체 생성
+      // 추가될 객체
       const newobj = {
         id: maxid + 1,
         todo: newTodoItem,
         done: false,
       };
 
-      // 배열에 추가
-      // push 는 브라우저에 영향 받을 수 있다.
+      // 배열에 추가 ==> push() 메서드 또는 spread 연산자
       // this.$data.todoItems.push(newobj);
-      // spread 는 모든 브라우저에서 사용 가능하다.
       this.$data.todoItems = [...this.$data.todoItems, newobj];
     },
-    doneToggle(e, id) {
-      debugger;
-      console.log(id);
-    },
-    removeTodo(id) {
-      debugger;
-      console.log(id);
-
-      // 이벤트 취소
-      // window.event.stopPropagation();
-      // window.event.preventDefault();
-
-      const newarr = this.$data.todoItems.filter((value) => {
-        // console.log(value, index, array);
-        return value.id === id ? false : true;
-      });
-      this.$data.todoItems = newarr;
-    },
-    /* 이벤트 핸들러 등록 + 일반 함수 */
     /* vuex 를 사용하는 경우
       mapActions 는 store의 actions 를 가져오는 헬퍼 메서드입니다.
       namespaced: true를 설정한 경우 네임스페이스를 사용하기 때문에 store의 모듈 명을 적어주어야 합니다.
@@ -326,12 +115,11 @@ export default {
       */
   },
   components: {
+    /* 지역 컴포넌트나 파일 컴포넌트만 등록 한다. 예시) "태그명" : 컴포넌트명 */
     TodoHeader: TodoHeader,
     TodoFooter: TodoFooter,
     TodoInput: TodoInput,
     TodoList: TodoList,
-    /* 전역 컴포넌트인 경우는 등록하지 않는다. 전역 컴포넌트는 프로토타입 체인으로 찾을 수 있기 때문에 */
-    /* 지역 컴포넌트나 파일 컴포넌트만 등록 한다. 예시) "태그명" : 컴포넌트명 */
   },
   computed: {
     /* 자동처리 + 동기식. 메서드로 작성. return 필수. data 와 공존 불가 */

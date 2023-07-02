@@ -8,7 +8,7 @@ console.log(`Hello ${name}`);
 const getMessage = (params) => {
   console.log(`Hello ${params}`);
 };
-getMessage('sangsang');
+getMessage('mija');
 
 debugger;
 
