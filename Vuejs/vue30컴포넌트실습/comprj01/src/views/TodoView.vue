@@ -265,8 +265,36 @@ export default {
       console.log(e.target);
       this.$data.todoItems = [];
     },
-    addTodo(e) {
-      console.log(e.target);
+    addTodo(e, newTodoItem) {
+      console.log(e, newTodoItem);
+
+      const ids = this.$data.todoItems.map((value) => {
+        return value.id;
+      });
+      console.log(ids);
+      // ids 의 최대값 ==> max(), reduce()
+      const maxid = ids.reduce((pvalue, cvalue) => {
+        debugger;
+        if (pvalue > cvalue) {
+          return pvalue;
+        } else {
+          return cvalue;
+        }
+      }, 0);
+      // pvalue 는 default 0 이다.
+
+      // 추가할 객체 생성
+      const newobj = {
+        id: maxid + 1,
+        todo: newTodoItem,
+        done: false,
+      };
+
+      // 배열에 추가
+      // push 는 브라우저에 영향 받을 수 있다.
+      // this.$data.todoItems.push(newobj);
+      // spread 는 모든 브라우저에서 사용 가능하다.
+      this.$data.todoItems = [...this.$data.todoItems, newobj];
     },
     doneToggle(e, id) {
       debugger;
@@ -275,6 +303,16 @@ export default {
     removeTodo(id) {
       debugger;
       console.log(id);
+
+      // 이벤트 취소
+      // window.event.stopPropagation();
+      // window.event.preventDefault();
+
+      const newarr = this.$data.todoItems.filter((value) => {
+        // console.log(value, index, array);
+        return value.id === id ? false : true;
+      });
+      this.$data.todoItems = newarr;
     },
     /* 이벤트 핸들러 등록 + 일반 함수 */
     /* vuex 를 사용하는 경우

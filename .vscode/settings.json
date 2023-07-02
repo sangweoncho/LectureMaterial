@@ -161,6 +161,7 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "eslint.workingDirectories": [{ "mode": "auto" }],
   "[vue]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "octref.vetur"

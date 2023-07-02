@@ -1,76 +1,4 @@
 <style scoped>
-.addContainer {
-  float: right;
-  background: linear-gradient(to right, #6478fb, #8763fb);
-  display: inline-block;
-  width: 3rem;
-  border-radius: 0 5px 5px 0;
-}
-
-.addBtn {
-  color: white;
-  vertical-align: middle;
-}
-
-.closeModalBtn {
-  color: #62acde;
-}
-
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: table;
-  transition: opacity 0.3s ease;
-}
-
-.modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.modal-container {
-  width: 300px;
-  margin: 0px auto;
-  padding: 20px 30px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-  transition: all 0.3s ease;
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-.modal-header h3 {
-  margin-top: 0;
-  color: #62acde;
-}
-
-.modal-body {
-  margin: 20px 0;
-}
-
-.modal-default-button {
-  float: right;
-}
-
-.modal-enter {
-  opacity: 0;
-}
-
-.modal-leave-active {
-  opacity: 0;
-}
-
-.modal-enter .modal-container,
-.modal-leave-active .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-
 ul {
   list-style-type: none;
   padding-left: 0px;
@@ -119,32 +47,24 @@ li.checked {
 </style>
 
 <template>
+  <!-- "checked(todoItem.done)"  <==> "todoItem.done ? 'checked': null "  -->
   <section>
     <ul>
-      <!-- <li class="checked">
-        <i aria-hidden="true" class="checkBtn fas fa-check"></i>
-        주말 산책
-        <span type="button" class="removeBtn">
-          <i aria-hidden="true" class="far fa-trash-alt"></i>
-        </span>
-      </li> -->
-      <!-- "checked(todoItem.done)"  <==> "todoItem.done ? 'checked': null "  -->
-      <!-- v-on:click.stop="removeTodo(todoItem.id) -->
       <li
-        v-for="todoItem in todoItems"
-        v-bind:key="todoItem.id"
-        v-bind:class="checked(todoItem.done)"
-        v-bind:data-id="todoItem.id"
-        v-on:click="(e) => doneToggle(e, todoItem.id)"
+        v-for="item in todoItems"
+        v-bind:class="item.done ? 'checked' : null"
+        v-bind:key="item.id"
+        v-on:click="(e) => doneToggle(e, item.id)"
       >
-        <i class="checkBtn fas fa-check" aria-hidden="true"></i>
-        {{ todoItem.todo }}
+        <i aria-hidden="true" class="checkBtn fas fa-check"></i>
+        {{ item.todo }}
         <span
-          class="removeBtn"
           type="button"
-          v-on:click="removeTodo(todoItem.id)"
+          class="removeBtn"
+          v-bind:data-id="item.id"
+          v-on:click.stop="removeTodo(item.id)"
         >
-          <i class="far fa-trash-alt" aria-hidden="true"></i>
+          <i aria-hidden="true" class="far fa-trash-alt"></i>
         </span>
       </li>
     </ul>
@@ -164,34 +84,19 @@ export default {
   },
   //template: ``,
   methods: {
-    checked(done) {
-      console.log(done);
-      return done ? 'checked' : null;
-    },
+    /* 이벤트 핸들러 등록 + 일반 함수 */
     doneToggle(e, id) {
       console.log(e.target, id);
-      // 부모 컴포넌트에게 doneToggle 이벤트 발생시킨다.
-      // const id = e.target.dataset.id;
       debugger;
       this.$emit('doneToggle', e, id);
-
-      const newarr = this.$data.todoItems.map((value, index, array) => {
-        console.log(value, index, array);
-        // debugger;
-        if (value.id === id) {
-          value.done = !value.done;
-          return value;
-        }
-        this.$data.todoItems = array;
-      });
     },
     removeTodo(id) {
-      debugger;
+      // 이벤트 취소 기능이 있어야 한다.
+
       console.log(id);
-      // 부모 컴포넌트에게 doneToggle 이벤트 발생시킨다.
+      debugger;
       this.$emit('removeTodo', id);
     },
-    /* 이벤트 핸들러 등록 + 일반 함수 */
     /* vuex 를 사용하는 경우
       mapActions 는 store의 actions 를 가져오는 헬퍼 메서드입니다.
       namespaced: true를 설정한 경우 네임스페이스를 사용하기 때문에 store의 모듈 명을 적어주어야 합니다.
