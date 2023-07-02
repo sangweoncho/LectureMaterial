@@ -5,7 +5,7 @@ function Header() {
   return (
     <div w3-include-header="header.html">
       <header data-role="header">
-        <h1>Header.html</h1>
+        <h1>Header.React.html</h1>
       </header>
     </div>
   );
