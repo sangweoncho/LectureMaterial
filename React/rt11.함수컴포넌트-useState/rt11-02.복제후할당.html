@@ -118,83 +118,66 @@ const [arr, setArr] = useState([1, 2, 3, 4, 5]);
   // const {...props} = props;
   function Repl({ }) {
     // useState 를 사용한 컴포넌트의 상태값 설정
-    // const [변수명, set변수명] = useState('기본값'); // 상태값이 기본타입인 경우
     const [arr, setArr] = useState([1, 2, 3, 4, 5]); // 상태값이 기본타입인 경우
 
-    // 함수 : 이벤트 핸들러 작성.
+    // 이벤트 핸들러 작성.
     const handlerChange1 = (e) => {
       // 이벤트 핸들러는 화살표 함수로 만든다
       console.log(e.target);
       debugger;
-      console.log('변경전 : ', arr);
+      console.log('변경 전:', arr); // [1, 2, 3, 4, 5]
       const newArr = [100, 2, 3, 4, 5];
-
-      // 시간이 많이 걸린다. >> state 변경은 비동기 처리된다.
-      setArr(newArr);
-
-      console.log('변경후 : ', arr);
+      setArr(newArr); // setter 메서드를 이용한 state 변경은 비동기로 처리됨. ==> 시간이 오래 걸림
+      console.log('변경 후:', arr); // [1, 2, 3, 4, 5]
     };
     const handlerChange2 = (e) => {
       // 이벤트 핸들러는 화살표 함수로 만든다
       console.log(e.target);
       debugger;
-      // 복제
-      const newArr = arr && arr.length > 0 && arr.map((value, index, array) => {
-        if (index === 1) {
-          value = 300;
+      // 복제.
+      const newArr = arr &&
+        arr.length > 0 &&
+        arr.map((value, index, array) => {
+          if (index === 1)
+            value = 300;
+
           return value;
-        }
-        return value;
-      });
-      // 할당
-      setArr(newArr);
+        });
+      // 할당.
+      setArr(newArr); // setter 메서드를 이용한 state 변경은 비동기로 처리됨. ==> 시간이 오래 걸림
     };
     const handlerChange3 = (e) => {
       // 이벤트 핸들러는 화살표 함수로 만든다
       console.log(e.target);
-      // debugger;
-      // 복제 : 얗은 복사 방식이 사용됨.
-      const newArr = arr && arr.length > 0 && arr.filter((value, index, array) => {
-        return index > 1 ? true : false;
-        // if (index > 1) {
-        //   return true;
-        // }
-        // return false;
-      });
+      debugger;
+      // 복제 ==> 얕은 복사 방식이 사용됨.
+      const newArr = arr &&
+        arr.length > 0 &&
+        arr.filter((value, index, array) => (index > 1) ? true : false);
+
       // 할당
       setArr(newArr);
     };
     const handlerChange4 = (e) => {
       // 이벤트 핸들러는 화살표 함수로 만든다
       console.log(e.target);
-      // debugger;
-      // 복제
-      const newArr = arr && arr.length > 0 && arr.filter((value, index, array) => {
-        if (index > 1) {
-          return true;
-        }
-        return false;
-      });
-      const spreadArr = [500, ...newArr, 70];
-      console.log(spreadArr);
+      debugger;
+      // 복제 ==> 얕은 복사 방식이 사용됨.
+      const newArr = [500, ...arr, 70];
       // 할당
-      setArr(spreadArr);
+      setArr(newArr);
     };
-
 
     // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
     return (
-      <div>
-        <hr />
-        <div id="app">
-          <div>
-            {arr.map((value, index) => (<span key={index}> {value} </span>))}
-            <br />
-            <button onClick={handlerChange1}>방법1로 변경</button>
-            <button onClick={handlerChange2}>방법2로 변경</button>
-            <button onClick={handlerChange3}>방법3로 변경</button>
-            <button onClick={handlerChange4}>방법4로 변경</button>
-          </div>
+      <div id="app">
+        <div>
+          {arr.map((value, index) => (<span key={index}> {value} </span>))}
+          <br />
+          <button onClick={handlerChange1}>방법1로 변경</button>
+          <button onClick={handlerChange2}>방법2로 변경</button>
+          <button onClick={handlerChange3}>방법3로 변경</button>
+          <button onClick={handlerChange4}>방법4로 변경</button>
         </div>
       </div>
     );

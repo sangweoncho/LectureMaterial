@@ -24,16 +24,16 @@
             HelloContainer  ==> 공유 데이터 ==> 컨테이너 컴포넌트
             HelloReact      ==> 데이터 표시 ==> 프리젠테이션 컴포넌트
 
-        부모 : HelloContainer JSX
+        HelloContainer JSX
             <HelloReact mesgOfProps={"Hello, Props!!!"}>
 
             </HelloReact>
 
-        자식 : HelloReact JSX 화면
+        HelloReact JSX 화면
             <div>
                 도전1. Hello, React!!!
                 <br />
-                도전2. {mesgOfState} -- 내장변수
+                도전2. {mesgOfState}
                 <br />
                 도전3. {mesgOfProps}
             </div>
@@ -48,7 +48,8 @@
                 <hr />
             </div>
 
-        도전. HelloReact 컴포넌트에 이벤트 핸들러 추가 즉, 부모의 callback 메서드 호출 기능을 추가한다.
+        도전. HelloReact 컴포넌트에 이벤트 핸들러 추가
+              부모의 callback 메서드 호출 기능을 추가한다.
             <hr />
             <button onClick={????}> 부모의 callback 메서드 호출</button>
 
@@ -98,16 +99,16 @@
   // const {...props} = props;
   function HelloContainer({ ...props }) {
     // useState 를 사용한 컴포넌트의 상태값 설정
-    const [mesgOfProps, setMesgOfProps] = useState('Hello, Props!!!'); // 상태값이 기본타입인 경우
+    const [mesgOfProps, setMesgOfProps] = useState("Hello, Props!!!"); // 상태값이 기본타입인 경우
 
     // callback 메서드 작성. callback 메서드는 부모의 공유 상태값을 변경하기 위해서 사용된다.
-    const callback = useCallback((param) => {
-      debugger;
-      // state 변경
-      setMesgOfProps(param);
-    },
-      [
-        /* 연관배열: 콜백 메서드에서 변경하고자 하는 연관되는 상태(변수)명들을 기술  */
+    const callback = useCallback(
+      (param) => {
+        debugger;
+        // state 변경
+        setMesgOfProps(param);
+      },
+      [/* 연관배열: 콜백 메서드에서 변경하고자 하는 연관되는 상태(변수)명들을 기술  */
         mesgOfProps
       ]
     );
@@ -121,10 +122,10 @@
     );
   }
 
-  // const {mesgOfProps, callback} = props;
+  // const { mesgOfProps, callback } = props;
   function HelloReact({ mesgOfProps, callback }) {
     // useState 를 사용한 컴포넌트의 상태값 설정
-    const [mesgOfState, setMesgOfState] = useState('내장변수'); // 상태값이 기본타입인 경우
+    const [mesgOfState, setMesgOfState] = useState('Hello, State!!!'); // 상태값이 기본타입인 경우
 
     // 이벤트 핸들러 작성.
     const handler = (e) => {
@@ -133,9 +134,8 @@
 
       debugger;
 
-      // 부모의 콜백 메소드 호출하기
-      callback('콜백값');
-      // mesgOfProps('콜백값') >> error
+      // 부모의 콜백 메서드 호출하기.
+      callback('fadfi ofdkfla');
     };
 
     // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
@@ -149,7 +149,7 @@
         <hr />
         <button onClick={handler}> 부모의 callback 메서드 호출</button>
       </div>
-
     );
   }
+
 </script>

@@ -33,7 +33,6 @@
     예제2. v-on 과 v-bind 지시자를 추가하여 기능을 완성하시오.
     예제3. v-on 과 v-bind 지시자를 추가하여 기능을 완성하시오.
 
-    [참조]page 105, 106, 107
     </xmp>
     <hr>
 
@@ -66,44 +65,39 @@
 
 </html>
 
-
 <!-- vue 플러그인 임포트   -->
 <script src="https://unpkg.com/vue@2.7.8/dist/vue.js">/* vue 플러그인 임포트 */</script>
-<script src="https://unpkg.com/vuex@3.6.2/dist/vuex.js"> /* vuex 플러그인 임포트 */</script>
-<script src="https://unpkg.com/vue-router@3.5.4/dist/vue-router.js"> /* vue 라우터 플러그인 임포트 */</script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"> /* axios 플러그인 임포트 */</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> /* jQuery 플러그인 임포트 */</script>
 <script>
   new Vue({
     /* edtmc^2w */
     el: '#app',
     data: {
       /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
-      sum1: null,
-      numInput: null,
-      sumInput: null,
-      sum10: null,
+      sum1: 0,
+      numInput: 0,
+      sumInput: 0,
+      sum10: 0,
     },
     //template: ``,
     methods: {
       /* 이벤트 핸들러 등록 + 일반 함수 */
       clickBtn1(e) {
         console.log(e.target);
-        // debugger;
-        this.$data.sum1++;
+        debugger;
+        this.$data.sum1 = this.$data.sum1 + 1;
       },
       clickBtnInput(e) {
         console.log(e.target);
-        // debugger;
-        this.$data.sumInput = Number(this.$data.sumInput) + Number(this.$data.numInput);
+        debugger;
+        this.$data.sumInput = this.$data.sumInput + Number(this.$data.numInput);
       },
       clickBtn10(e) {
         console.log(e.target);
-        console.log(this.$data.sum10);
-        const inum = e.target.dataset.num;
-        // debugger;
-        this.$data.sum10 = Number(this.$data.sum10) + Number(inum);
-      }
+
+        const num = e.target.dataset.num;
+        debugger;
+        this.$data.sum10 = this.$data.sum10 + Number(num);
+      },
     },
   });
 

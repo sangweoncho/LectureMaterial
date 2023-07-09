@@ -70,7 +70,7 @@
     </div>
 
     <h2>
-      v-if/v-else 연습 3<br />
+      v-if/v-else 연 \습 3<br />
       위의 2 예제를 결합하는 예제 입니다.<br />
       버튼을 클릭하면 awesome의 값을 반전시킨다. <br />
       클릭하면 awesome : true ==> awesome : false<br />
@@ -107,21 +107,15 @@
 
 </html>
 
-
 <!-- vue 플러그인 임포트   -->
 <script src="https://unpkg.com/vue@2.7.8/dist/vue.js">/* vue 플러그인 임포트 */</script>
-<script src="https://unpkg.com/vuex@3.6.2/dist/vuex.js"> /* vuex 플러그인 임포트 */</script>
-<script src="https://unpkg.com/vue-router@3.5.4/dist/vue-router.js"> /* vue 라우터 플러그인 임포트 */</script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"> /* axios 플러그인 임포트 */</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> /* jQuery 플러그인 임포트 */</script>
 <script>
   new Vue({
     /* edtmc^2w */
     el: '#app1',
     data: {
       /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
-      // awesome: null /* null === false === ''*/
-      awesome: true
+      awesome: true  /* null === false === '' */,
     },
   });
   new Vue({
@@ -129,30 +123,36 @@
     el: '#app2',
     data: {
       /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
-      // awesome = undefinded
-      awesome: false
+      /* awesome= undefiend // undefiend === fals */
+      awesome: false,
     },
   });
   new Vue({
     /* edtmc^2w */
-    // 태그에서 변수 확인, 이벤트에서 함수 확인
     el: '#app3',
     data: {
       /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
-      awesome: null
+      awesome: false,
     },
     methods: {
+      /* 이벤트 핸들러 등록 + 일반 함수 */
       clickBind(e) {
         console.log(e.target);
-        // debugger;
-        // if (awesome) {
+        debugger;
+
+        // awesome: true  이면 awesome : false
+        // awesome: false 이면 awesome : true
+
+        // if (awesome === true) {
         //   this.$data.awesome = false;
-        // } else {
+        // }
+        // else {
         //   this.$data.awesome = true;
         // }
+
         this.$data.awesome = !this.$data.awesome;
       }
-    }
+    },
   });
   new Vue({
     /* edtmc^2w */
@@ -163,14 +163,14 @@
     },
     methods: {
       clickBind(e) {
-        console.log(e.target);
+        console.log(this.$data.type);
         // this.$data.type = this.$data.type + 1;
-        // console.log(this.$data.type);
         // if (this.$data.type >= 4) {
         //   this.$data.type = 0;
         // }
+
         this.$data.type = (this.$data.type + 1) % 4;
-      }
+      },
     }
   });
 

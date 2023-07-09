@@ -6,7 +6,7 @@ function Footer() {
   return (
     <div w3-include-footer="footer.html">
       <footer data-role="footer">
-        <h1>Footer.React.html</h1>
+        <h1>Footer.html</h1>
       </footer>
     </div>
   );
