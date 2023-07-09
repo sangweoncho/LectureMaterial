@@ -615,7 +615,9 @@
         $ pwd                                   # 현재 작업 디렉토리 확인
         $ ls                                    # package.json 파일이 보이는지 확인
         $ git add -AN                           # 신규 파일 추가 추가
+        $ git status
         $ git commit -a -m '코멘트'             # 파일 commit
+        $ git status
         $ git push origin main                  #
 
 
@@ -650,7 +652,7 @@
     |   |   |   |-- saga.js      (외부 API 호출 saga)
     |   |   |   |-- reducer.js   (리덕스 리듀서)
     |   |   |   |-- 컨테이너컴포넌트1.js     (컴포넌트 UI )
-    |   |        `-- 컨테이너컴포넌트1.css   (컨테이너컴포넌트1 에서만 사용되는 css 파일)
+    |   |        `-- 컨테이너컴포넌트1.css   (컨테이너컴포넌트1 에서만 사용되는 css 파일) >>> 잘 안사용한다.
     |   |   `-- 컨테이너컴포넌트2
     |   |        |-- components   (컨테이너컴포넌트2 에서만 사용되는 프리젠테이션 컴포넌트 폴더)
     |   |        |-- action.js    (액션상수,액션함수 정의)
@@ -658,10 +660,10 @@
     |   |        |-- saga.js      (외부 API 호출 saga)
     |   |        |-- reducer.js   (리덕스 리듀서)
     |   |        |-- 컨테이너컴포넌트2.js    (컴포넌트 UI )
-    |   |        `-- 컨테이너컴포넌트2.css   (컨테이너컴포넌트2 에서만 사용되는 css 파일)
+    |   |        `-- 컨테이너컴포넌트2.css   (컨테이너컴포넌트2 에서만 사용되는 css 파일) >>> 잘 안사용한다.
     |   |-- constant (상수)
     |   |-- models (데이터 모델 변수, 타입)
-    |   |-- pages (페이지 컴포넌트)
+    |   |-- pages (페이지 컴포넌트 ===> 라우팅 처리 한다.)
     |   |   `-- index.js
     |   |-- reducers (리듀서)
     |   |   `-- index.js
@@ -730,6 +732,22 @@
         To create a production build, use npm run build.
 
         webpack compiled successfully
+
+        브라우저 오류 날 경우
+        [eslint] prettier.resolveConfig.sync is not a function
+        Occurred while linting C:\FRONT230604\LectureMaterial\React\rt10.create-reate-project\reactprj01\src\index.js:1
+        Rule: "prettier/prettier"
+
+        https://www.npmjs.com/
+        검색어 : eslint-plugin-prettier
+
+        package.json 파일 수정
+        "prettier": "^2.8.8"
+
+        > npm install (package.json 기준으로 다시 다운받는다)
+
+        > npm run start
+
 
 
 
