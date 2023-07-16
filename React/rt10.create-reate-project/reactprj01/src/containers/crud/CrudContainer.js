@@ -86,9 +86,7 @@ function CrudContainer({ ...props }) {
   // items 배열에서 삭제하는 콜백 메서드 만들기. Array.filter() 를 사용한다
   const callbackDel = useCallback(
     (item) => {
-      // ...생략
-      // debugger;
-      // 복제후할당
+      // 복제후 할당
       const newItems =
         items &&
         items.length &&
@@ -108,8 +106,7 @@ function CrudContainer({ ...props }) {
   // power를 100씩 증가 시키는 콜백 메서드 만들기. Array.map() 을 사용한다
   const callbackUp = useCallback(
     (id) => {
-      // ...생략
-      debugger;
+      // 복제후 할당
       const newItems =
         items &&
         items.length &&
@@ -129,8 +126,7 @@ function CrudContainer({ ...props }) {
   // power를 50씩 감소 시키는 콜백 메서드 만들기. Array.map() 을 사용한다
   const callbackDown = useCallback(
     (id) => {
-      // ...생략
-      debugger;
+      // 복제후 할당
       const newItems =
         items &&
         items.length &&
@@ -147,38 +143,60 @@ function CrudContainer({ ...props }) {
     ],
   );
 
-  // 새로운 값으로 수정하는 콜백 메서드 만들기. Array.map() 을 사용한다
-  const callbackSave = useCallback(
-    (newitem) => {
-      // ...생략
-    },
-    [
-      /* 메서드와 연관되는 상태(변수)명들을 기술 */
-    ],
-  );
-
   // 새로운 값을 추가하는 콜백 메서드 만들기.
   // Array에서  Array.map()과 Array.reduce()를 사용하여 max id 구하기
   const callbackAdd = useCallback(
     (newitem) => {
+      // items에서 최대 id 값을 구하는 방법.
+      // 방법1. items.map()과 items.reduce()를 사용하여 max id를 구하시오.
+      let maxid = 0;
+      if (items.length > 0) {
+        maxid = items
+          .map((item) => item.id)
+          .reduce((pvalue, cvalue) => (pvalue >= cvalue ? pvalue : cvalue), -1);
+      }
+
+      const newid = maxid + 1;
+
+      // newitem 에  id 프러퍼티 추가
+      newitem.id = newid;
+
+      // items 에 추가하시오
+      // items.push(newitem);
+      setItems([...items, newitem]);
+    },
+    [/* 메서드와 연관되는 상태(변수)명들을 기술 */ items],
+  );
+
+  // 새로운 값으로 수정하는 콜백 메서드 만들기. Array.map() 을 사용한다
+  const callbackSave = useCallback(
+    (newitem) => {
       // ...생략
+
+      // 복제 후 할당
+      const newitems =
+        items &&
+        items.length &&
+        items.map((obj) => {
+          if (obj.id === newitem.id) return newitem;
+
+          return obj;
+        });
+
+      // 할당
+      setItems(newitems);
     },
     [
       /* 메서드와 연관되는 상태(변수)명들을 기술 */
+      items,
     ],
   );
-
-  // 이벤트 핸들러 작성.
-  const handler = (e) => {
-    // 이벤트 핸들러는 화살표 함수로 만든다
-    console.log(e.target);
-  };
 
   // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
   return (
     <StyledCrudContainer id="app">
       <h1>Creat Read Update Delete</h1>
-      <CrudInput></CrudInput>
+      <CrudInput callbackAdd={callbackAdd}></CrudInput>
       <hr />
       <CrudList
         items={items}

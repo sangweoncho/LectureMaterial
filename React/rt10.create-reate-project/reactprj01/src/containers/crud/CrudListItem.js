@@ -38,17 +38,11 @@ function CrudListItem({
   callbackSave,
 }) {
   // useState 를 사용한 컴포넌트의 상태값 설정
-  const [변수명, set변수명] = useState('기본값'); // 상태값이 기본타입인 경우
-  const [state, setState] = useState({ id: 0, name: '', age: 0 }); // 상태값이 참조타입 경우
-
-  // useReducer 를 사용한 컴포넌트의 상태값 설정. 리듀서는 현재 상태를 받아서 새 상태를 반환하는 함수다
-  const [리듀서, set리듀서] = useReducer(
-    (oldvalue, newvalue) => ({ ...oldvalue, ...newvalue }),
-    { id: 0, name: '', age: 0 },
-  ); // 리듀서(reducer) 방식의 상태값 설정
+  const [isEditMode, setIsEditMode] = useState(false); // 상태값이 기본타입인 경우
 
   // ref 만들기.
-  // const refInput = useRef();
+  const refInputName = useRef();
+  const refInputPower = useRef();
 
   // refIsMounted는 생명주기의 마운트와 업데이트를 구분하기 위한 ref
   const refIsMounted = useRef(false);
@@ -76,8 +70,6 @@ function CrudListItem({
   const handlerDel = (e) => {
     // 이벤트 핸들러는 화살표 함수로 만든다
     console.log(e.target);
-    console.log(item);
-    debugger;
 
     // 부모의 콜백 메서드 호출.
     // CrudContainer.callbackDel();
@@ -86,7 +78,6 @@ function CrudListItem({
   const handlerUp = (e) => {
     // 이벤트 핸들러는 화살표 함수로 만든다
     console.log(e.target);
-    debugger;
 
     // 부모의 콜백 메서드 호출.
     // CrudContainer.callbackUp();
@@ -95,7 +86,6 @@ function CrudListItem({
   const handlerDown = (e) => {
     // 이벤트 핸들러는 화살표 함수로 만든다
     console.log(e.target);
-    debugger;
 
     // 부모의 콜백 메서드 호출.
     // CrudContainer.callbackDown();
@@ -104,14 +94,67 @@ function CrudListItem({
   const handlerEdit = (e) => {
     // 이벤트 핸들러는 화살표 함수로 만든다
     console.log(e.target);
-    debugger;
+
+    // formView  를 formEdit 로 바꾸기. isEditMode = !isEditMode;
+    setIsEditMode(!isEditMode);
+  };
+  const handlerSave = (e) => {
+    // 이벤트 핸들러는 화살표 함수로 만든다
+    console.log(e.target);
+
+    // 유효성 검사 + 부모 콜백 메서드 호출. CrudInput 참조하여 코드를 완성하시오
+
+    // Name 입력 여부 유효성 검사
+    const name = refInputName.current.value;
+    if (!name || !name.trim()) {
+      alert('이름을 입력하세요');
+
+      //     포커스 주기
+      refInputName.current.focus();
+
+      //     이벤트 취소
+      e.stopPropagation();
+      e.preventDefault();
+
+      return;
+    }
+
+    // Power 입력 여부 유효성 검사
+    const power = refInputPower.current.value;
+    // !power <===> power !== null ||  power !== undefined ||  power !== 0
+    if (power === null || power == undefined || power < 0 || !power.trim()) {
+      alert('파워을 입력하세요');
+
+      //     포커스 주기
+      refInputPower.current.focus();
+
+      //     이벤트 취소
+      e.stopPropagation();
+      e.preventDefault();
+
+      return;
+    }
+
+    // power 값을 숫자로 바꾸시오.(문자열를 숫자로)
+    const newitem = {
+      /* { id, name, power} */
+      id: item.id,
+      name: name,
+      power: Number(power),
+    };
+
+    // 부모 콜백 메서드 호출. CrudContainer.callbackSave();
+    callbackSave(newitem);
+
+    // formEdit 를 formView 로 바꾸기. isEditMode = !isEditMode;
+    setIsEditMode(!isEditMode);
   };
 
   // JSX로 화면 만들기. 조건부 렌더링: https://ko.reactjs.org/docs/conditional-rendering.html
   let strong = '';
   if (item.power >= 300) strong = 'strong';
 
-  return (
+  const formView = (
     <StyledCrudListItem className={strong}>
       <td>{item.id}</td>
       <td>{item.name}</td>
@@ -132,6 +175,44 @@ function CrudListItem({
       </td>
     </StyledCrudListItem>
   );
+
+  const formEdit = (
+    <StyledCrudListItem className={strong}>
+      <td>{item.id}</td>
+      <td>
+        <input
+          type="text"
+          name="name"
+          placeholder="이름을 입력하세요"
+          defaultValue={item.name}
+          ref={refInputName}
+        />
+      </td>
+      <td>
+        <input
+          type="number"
+          name="power"
+          placeholder="숫자를 입력하세요"
+          defaultValue={item.power}
+          ref={refInputPower}
+        />
+      </td>
+      <td>
+        <button type="button" onClick={handlerUp}>
+          Power Up
+        </button>
+        <button type="button" onClick={handlerDown}>
+          Power Down
+        </button>
+        <button type="button" onClick={handlerSave}>
+          Save
+        </button>
+      </td>
+    </StyledCrudListItem>
+  );
+
+  if (isEditMode === false) return formView;
+  else return formEdit;
 }
 
 CrudListItem.propTypes = {
@@ -155,4 +236,4 @@ CrudListItem.defaultProps = {
   callbackSave: () => {},
 };
 
-export default CrudListItem; // React.memo(CrudListItem); // React.memo()는 props 미변경시 컴포넌트 리렌더링 방지 설정
+export default CrudListItem; // React.memo(CrudListItem); // React.memo()는 props 미변경시 컴포넌트 리렌더링 방지 설
